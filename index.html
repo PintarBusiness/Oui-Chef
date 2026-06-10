@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oui Chef – Street Food</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brown:#3D2314;
+  --brown-dark:#1A0E08;
+  --brown-mid:#2A1610;
+  --gold:#E8A020;
+  --gold-light:#F2BC50;
+  --cream:#F5F0E8;
+  --cream-dim:rgba(245,240,232,0.65);
+  --cream-faint:rgba(245,240,232,0.18);
+  --gold-faint:rgba(232,160,32,0.12);
+  --gold-border:rgba(232,160,32,0.18);
+}
+html{scroll-behavior:smooth}
+body{background:var(--brown-dark);color:var(--cream);font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:22px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:padding .35s,background .35s,box-shadow .35s;
+}
+nav.scrolled{
+  padding:14px 48px;
+  background:rgba(18,8,3,0.96);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 0 var(--gold-border);
+}
+.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:1px solid var(--gold);}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  color:var(--cream);text-decoration:none;
+  font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  opacity:.7;transition:opacity .2s,color .2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:-3px;width:0;height:1px;
+  background:var(--gold);transition:width .25s;
+}
+.nav-links a:hover{opacity:1;color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  background:transparent;color:var(--gold);
+  padding:9px 22px;border:1px solid var(--gold);
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;transition:background .2s,color .2s;
+}
+.nav-cta:hover{background:var(--gold);color:var(--brown-dark)}
+.burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  cursor:pointer;background:none;border:none;
+  padding:0;z-index:101;width:22px;height:22px;
+}
+.burger span{
+  width:22px;height:2px;
+  background:var(--cream);display:block;
+  transition:transform .3s ease, opacity .3s ease;
+  transform-origin:center;
+}
+.burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.active span:nth-child(2){opacity:0}
+.burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed;inset:0;
+  background:var(--brown-dark);z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;gap:36px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+  display:flex;
+}
+.mobile-menu.open{opacity:1;pointer-events:all}
+.mobile-menu a{
+  color:var(--cream);text-decoration:none;
+  font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;
+  transition:color .2s;transform:translateY(0);
+}
+.mobile-menu a:hover{color:var(--gold)}
+
+
+/* ── HERO ── */
+.hero{
+  height:100vh;min-height:680px;
+  position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('images/slika6.jpg');
+  background-size:cover;background-position:center 40%;
+  will-change:transform;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(165deg,rgba(18,8,3,.72) 0%,rgba(61,35,20,.5) 55%,rgba(18,8,3,.88) 100%);
+}
+.hero-content{
+  position:relative;z-index:1;
+  max-width:860px;padding:0 28px;text-align:center;
+}
+.hero-eyebrow{
+  display:inline-block;font-size:.72rem;font-weight:600;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:28px;opacity:0;animation:riseIn .9s .15s forwards;
+}
+.hero-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,7.5vw,7rem);
+  line-height:1.0;font-weight:900;color:#fff;
+  margin-bottom:28px;
+}
+/* each word animates in separately */
+.hero-headline .word{
+  display:inline-block;
+  opacity:0;transform:translateY(28px);
+  animation:riseIn .8s forwards;
+}
+.hero-headline em{font-style:italic;color:var(--gold)}
+.hero-sub{
+  font-size:clamp(.95rem,1.8vw,1.15rem);
+  font-weight:300;color:var(--cream-dim);line-height:1.8;
+  max-width:480px;margin:0 auto 44px;
+  opacity:0;animation:riseIn .9s .85s forwards;
+}
+.hero-btns{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:riseIn .9s 1.0s forwards;
+}
+.btn-primary{
+  background:var(--gold);color:var(--brown-dark);
+  padding:14px 36px;
+  font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;display:inline-block;transition:all .2s;
+}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,160,32,.3)}
+.btn-ghost{
+  background:transparent;color:var(--cream);
+  padding:13px 36px;border:1px solid rgba(245,240,232,.3);
+  font-weight:500;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;display:inline-block;transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-scroll{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;animation:riseIn .9s 1.3s forwards;
+}
+.scroll-line{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%,100%{opacity:.5;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.1)}}
+.scroll-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.4)}
+
+@keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+
+/* ── TAGLINE STRIP ── */
+.tagline-strip{
+  background:var(--gold);overflow:hidden;padding:16px 0;
+}
+.tagline-track{
+  display:flex;width:max-content;
+  animation:scrollTrack 30s linear infinite;
+}
+.tagline-track span{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;font-style:italic;font-weight:700;
+  color:var(--brown-dark);padding:0 28px;white-space:nowrap;
+}
+.tagline-track .sep{opacity:.35;font-style:normal}
+@keyframes scrollTrack{from{transform:translateX(0)}to{transform:translateX(-25%)}}
+
+/* ── SECTIONS ── */
+.section{padding:110px 0}
+.container{max-width:1160px;margin:0 auto;padding:0 48px}
+.label{
+  font-size:.68rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:16px;
+}
+.title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4vw,3.6rem);font-weight:900;
+  color:var(--cream);line-height:1.1;
+}
+.title em{font-style:italic;color:var(--gold)}
+.intro-text{
+  font-size:1rem;font-weight:300;color:var(--cream-dim);
+  line-height:1.85;max-width:500px;
+}
+
+/* ── MENI KARTICE ── */
+.menu-section{background:var(--brown)}
+.menu-header{margin-bottom:64px}
+.menu-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:var(--gold-border);
+}
+.mc{
+  background:var(--brown-dark);
+  display:flex;flex-direction:column;
+  transition:background .25s;
+  cursor:default;
+}
+.mc:hover{background:var(--brown-mid)}
+.mc-img{
+  width:100%;aspect-ratio:4/3;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.mc-img img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+  transition:transform .6s ease;
+}
+.mc:hover .mc-img img{transform:scale(1.05)}
+.mc-body{
+  padding:28px 28px 32px;
+  flex:1;display:flex;flex-direction:column;
+}
+.mc-top{
+  display:flex;justify-content:space-between;
+  align-items:baseline;margin-bottom:10px;gap:8px;
+}
+.mc-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;color:var(--cream);
+}
+.mc-price{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:700;color:var(--gold);
+  white-space:nowrap;
+}
+.mc-desc{
+  font-size:.87rem;line-height:1.75;
+  color:var(--cream-dim);flex:1;
+}
+.mc .mi-tag{margin-top:16px;align-self:flex-start}
+
+/* pommes removed — same card as others */
+
+/* ── GALERIJA ── */
+.gallery-section{background:var(--brown-dark)}
+.gallery-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:56px;gap:40px;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:320px 240px;
+  gap:4px;
+}
+.gallery-item{overflow:hidden;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.gallery-item:hover img{transform:scale(1.06)}
+.g-big{grid-row:span 2}
+
+/* ── O NAS ── */
+.about-section{background:var(--brown)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:90px;align-items:center;
+}
+.about-imgs{position:relative;height:580px}
+.about-img-main{
+  position:absolute;top:0;left:0;
+  width:78%;height:88%;
+  object-fit:cover;object-position:top;display:block;
+}
+.about-img-accent{
+  position:absolute;bottom:0;right:0;
+  width:52%;height:50%;
+  object-fit:cover;object-position:top;
+  border:5px solid var(--brown);display:block;
+}
+.about-text .title{margin-bottom:24px}
+.about-body{font-size:.97rem;line-height:1.9;color:var(--cream-dim);margin-bottom:36px}
+.about-stats{display:flex;gap:44px;padding-top:36px;border-top:1px solid var(--gold-border)}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.stat-l{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-top:7px;display:block}
+
+/* ── FESTIVALI ── */
+.festivals-section{background:var(--brown-dark)}
+.festivals-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;gap:48px}
+.festivals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gold-border)}
+.festival-card{
+  background:var(--brown-dark);padding:44px 36px;
+  transition:background .25s;
+}
+.festival-card:hover{background:var(--brown)}
+/* clean SVG icon wrapper */
+.f-icon{
+  width:40px;height:40px;margin-bottom:24px;
+  color:var(--gold);opacity:.8;
+}
+.f-icon svg{width:100%;height:100%}
+.f-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem;font-weight:700;color:var(--cream);
+  margin-bottom:12px;
+}
+.f-desc{font-size:.88rem;line-height:1.75;color:var(--cream-dim)}
+
+/* ── CTA STRIP ── */
+.cta-strip{
+  background:var(--gold);padding:88px 48px;text-align:center;
+}
+.cta-strip .ct{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.4rem);font-weight:900;
+  color:var(--brown-dark);margin-bottom:12px;
+}
+.cta-strip .cs{
+  font-size:1rem;color:rgba(26,14,8,.65);margin-bottom:38px;
+}
+.btn-dark{
+  background:var(--brown-dark);color:var(--gold);
+  padding:15px 42px;
+  font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;display:inline-block;transition:all .2s;
+}
+.btn-dark:hover{background:#0d0602;transform:translateY(-2px);box-shadow:0 8px 28px rgba(18,8,3,.3)}
+
+/* ── KONTAKT ── */
+.contact-section{background:var(--brown)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;margin-top:56px}
+.c-detail{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:28px 0;border-bottom:1px solid var(--gold-border);
+}
+.c-detail:last-child{border-bottom:none}
+/* clean icon */
+.c-icon{
+  width:20px;height:20px;min-width:20px;
+  margin-top:2px;color:var(--gold);opacity:.75;
+}
+.c-icon svg{width:100%;height:100%}
+.c-title{font-weight:600;font-size:.88rem;color:var(--cream);margin-bottom:4px}
+.c-val{font-size:.88rem;color:var(--cream-dim);line-height:1.65}
+.c-val a{color:var(--cream-dim);text-decoration:none;transition:color .2s}
+.c-val a:hover{color:var(--gold)}
+.form-group{margin-bottom:18px}
+.form-group label{
+  display:block;font-size:.7rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,240,232,.4);margin-bottom:8px;
+}
+.form-group input,
+.form-group textarea{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1px solid var(--gold-border);
+  color:var(--cream);padding:13px 16px;
+  font-family:'Inter',sans-serif;font-size:.9rem;
+  outline:none;transition:border-color .2s;
+  border-radius:0;-webkit-appearance:none;
+}
+.form-group input:focus,
+.form-group textarea:focus{border-color:rgba(232,160,32,.5)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-note{font-size:.78rem;color:rgba(245,240,232,.3);margin-top:14px}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--brown-dark);
+  padding:44px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--gold-border);flex-wrap:wrap;gap:16px;
+}
+.footer-logo img{height:36px;width:36px;object-fit:cover;border-radius:50%;border:1px solid var(--gold);opacity:.85}
+.footer-copy{font-size:.78rem;color:rgba(245,240,232,.28)}
+.footer-credit{font-size:.78rem;color:rgba(245,240,232,.22)}
+.footer-credit a{color:rgba(245,240,232,.3);text-decoration:none;transition:color .2s}
+.footer-credit a:hover{color:var(--gold)}
+
+/* ── SCROLL REVEAL ── */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-left{opacity:0;transform:translateX(-36px);transition:opacity .75s ease,transform .75s ease}
+.rv-left.in{opacity:1;transform:translateX(0)}
+.rv-right{opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s ease}
+.rv-right.in{opacity:1;transform:translateX(0)}
+
+/* stagger delay helpers */
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:flex}
+  nav{padding:18px 24px}
+  nav.scrolled{padding:13px 24px}
+  .container{padding:0 24px}
+  .section{padding:72px 0}
+
+  /* grids → single column */
+  .about-grid,
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+
+  /* about images stacked */
+  .about-imgs{height:360px}
+  .about-img-accent{width:42%;height:42%}
+
+  /* gallery: 2 cols, big item spans both */
+  .gallery-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:200px 200px 200px;
+    gap:3px;
+  }
+  .g-big{grid-row:span 1;grid-column:span 2}
+
+  /* menu cards 2 cols on tablet */
+  .menu-cards{grid-template-columns:repeat(2,1fr)}
+
+  /* festivals 2 cols */
+  .festivals-grid{grid-template-columns:1fr 1fr}
+  .festivals-header,.gallery-header{flex-direction:column;align-items:flex-start;gap:12px}
+
+  /* footer */
+  footer{flex-direction:column;align-items:flex-start;padding:36px 24px;gap:12px}
+
+  /* cta strip */
+  .cta-strip{padding:72px 24px}
+}
+
+@media(max-width:600px){
+  nav{padding:16px 20px}
+  nav.scrolled{padding:11px 20px}
+  .container{padding:0 20px}
+  .section{padding:60px 0}
+
+  /* hero full height, text legible */
+  .hero{height:100svh;min-height:560px}
+  .hero-content{padding:0 20px}
+  .hero-btns{flex-direction:column;align-items:center;gap:12px}
+  .hero-btns a{width:100%;max-width:280px;text-align:center}
+  .hero-scroll{display:none}
+
+  /* tagline strip smaller */
+  .tagline-strip{padding:12px 0}
+  .tagline-track span{font-size:.88rem;padding:0 20px}
+
+  /* titles */
+  .title{font-size:clamp(1.9rem,8vw,2.8rem)}
+
+  /* menu cards single col */
+  .menu-cards{grid-template-columns:1fr}
+  .mc-body{padding:22px 20px 26px}
+  .mc-name{font-size:1.2rem}
+  .mc-price{font-size:1.05rem}
+
+  /* gallery single col */
+  .gallery-grid{
+    grid-template-columns:1fr;
+    grid-template-rows:none;
+    gap:3px;
+  }
+  .gallery-item{height:260px}
+  .g-big{grid-column:auto;grid-row:auto}
+
+  /* about */
+  .about-imgs{height:280px}
+  .about-img-accent{display:none}
+  .about-stats{
+    flex-wrap:wrap;gap:24px;
+    padding-top:28px;
+  }
+  .stat-n{font-size:2.2rem}
+
+  /* festivals single col */
+  .festivals-grid{grid-template-columns:1fr;background:none;gap:1px}
+  .festival-card{padding:32px 22px}
+
+  /* cta */
+  .cta-strip{padding:60px 20px}
+  .cta-strip .ct{font-size:clamp(1.7rem,7vw,2.4rem)}
+  .btn-dark{display:block;text-align:center}
+
+  /* contact */
+  .c-detail{padding:22px 0}
+  .form-group input,
+  .form-group textarea{font-size:16px} /* prevent iOS zoom */
+
+  /* footer */
+  footer{padding:32px 20px}
+
+  /* menu photo shorter */
+  .menu-photo{height:280px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">
+    <a href="#vrh"><img src="images/logo.jpg" alt="Oui Chef"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#meni">Meni</a></li>
+    <li><a href="#galerija">Galerija</a></li>
+    <li><a href="#o-nas">O nas</a></li>
+    <li><a href="#festivali">Festivali</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">Rezerviraj</a>
+  <button class="burger" id="burger" aria-label="Meni"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#meni" class="ml">Meni</a>
+  <a href="#galerija" class="ml">Galerija</a>
+  <a href="#o-nas" class="ml">O nas</a>
+  <a href="#festivali" class="ml">Festivali</a>
+  <a href="#kontakt" class="ml">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="vrh">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">— Delight in every bite —</span>
+    <h1 class="hero-headline">
+      <span class="word" style="animation-delay:.3s">crispy&nbsp;fries.</span><br>
+      <span class="word" style="animation-delay:.5s"><em>golden</em>&nbsp;buns.</span><br>
+      <span class="word" style="animation-delay:.7s" id="big-smiles">big&nbsp;smiles.</span>
+    </h1>
+    <p class="hero-sub">Premium street food, narejen s strastjo. Najdemo se na festivalih, trgih in posebnih dogodkih po vsej Sloveniji.</p>
+    <div class="hero-btns">
+      <a href="#meni" class="btn-primary">Poglej meni</a>
+      <a href="#kontakt" class="btn-ghost">Povabi nas</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- TAGLINE STRIP -->
+<div class="tagline-strip" aria-hidden="true">
+  <div class="tagline-track">
+    <span>Royal Dog</span><span class="sep">/</span><span>Beef Bun</span><span class="sep">/</span><span>Mr. Fancy</span><span class="sep">/</span><span>La Shrimp</span><span class="sep">/</span><span>Mango Shrimp</span><span class="sep">/</span><span>Pommes</span><span class="sep">/</span>
+    <span>Royal Dog</span><span class="sep">/</span><span>Beef Bun</span><span class="sep">/</span><span>Mr. Fancy</span><span class="sep">/</span><span>La Shrimp</span><span class="sep">/</span><span>Mango Shrimp</span><span class="sep">/</span><span>Pommes</span><span class="sep">/</span>
+    <span>Royal Dog</span><span class="sep">/</span><span>Beef Bun</span><span class="sep">/</span><span>Mr. Fancy</span><span class="sep">/</span><span>La Shrimp</span><span class="sep">/</span><span>Mango Shrimp</span><span class="sep">/</span><span>Pommes</span><span class="sep">/</span>
+    <span>Royal Dog</span><span class="sep">/</span><span>Beef Bun</span><span class="sep">/</span><span>Mr. Fancy</span><span class="sep">/</span><span>La Shrimp</span><span class="sep">/</span><span>Mango Shrimp</span><span class="sep">/</span><span>Pommes</span><span class="sep">/</span>
+  </div>
+</div>
+
+<!-- MENI -->
+<section class="section menu-section" id="meni">
+  <div class="container">
+    <div class="menu-header">
+      <span class="label rv">Zvezde na meniju</span>
+      <h2 class="title rv d1" style="margin-bottom:20px">Vsak griz je <em>malo drugačen.</em></h2>
+      <p class="intro-text rv d2">Sveže sestavine, recepti iz strasti in roke, ki vedo, kaj delajo — vsak dan znova.</p>
+    </div>
+    <div class="menu-cards rv d2">
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika5.jpg" alt="Royal Dog" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">Royal Dog</span><span class="mc-price">11,50 €</span></div>
+          <p class="mc-desc">Kraljevski hotdog za resne jedce. Hrustljava hrenovka, domač hrenov preliv in karamelizirani čebula.</p>
+          <span class="mi-tag">Bestseller</span>
+        </div>
+      </div>
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika7.jpg" alt="Beef Bun" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">Beef Bun</span><span class="mc-price">12,50 €</span></div>
+          <p class="mc-desc">Sočna govedina, zlato zapečeni robovi in klasika, ki vedno zmaga. Brioche, cheddar, čebulna marmelada.</p>
+          <span class="mi-tag">Klasika</span>
+        </div>
+      </div>
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika5.jpg" alt="Mr. Fancy" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">Mr. Fancy</span><span class="mc-price">13,50 €</span></div>
+          <p class="mc-desc">Za malo bolj fine brbončice — mehka govedina, sveža rukola in eleganca tartufa za piko na i.</p>
+          <span class="mi-tag">Premium</span>
+        </div>
+      </div>
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika7.jpg" alt="La Shrimp" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">La Shrimp</span><span class="mc-price">13,00 €</span></div>
+          <p class="mc-desc">Poletni okus v štrucki — kozice, limeta in tisti pravi morski vibe. Sveže rdece zelje, avokadova krema.</p>
+          <span class="mi-tag">Svežina</span>
+        </div>
+      </div>
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika5.jpg" alt="Mango Shrimp" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">Mango Shrimp</span><span class="mc-price">14,00 €</span></div>
+          <p class="mc-desc">Tropska svežina — avokado, mango in kozice za pravi okus poletja. Mango salsa in chili majoneza.</p>
+          <span class="mi-tag">Tropsko</span>
+        </div>
+      </div>
+      <div class="mc">
+        <div class="mc-img"><img src="images/slika7.jpg" alt="Pommes" loading="lazy"></div>
+        <div class="mc-body">
+          <div class="mc-top"><span class="mc-name">Pommes</span><span class="mc-price">4,00 €</span></div>
+          <p class="mc-desc">Zunaj hrustljav, znotraj mehak — tako dober, da ga boš zahteval ob vsakem sendviču.</p>
+          <span class="mi-tag">Obvezna priloga</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIJA -->
+<section class="section gallery-section" id="galerija">
+  <div class="container">
+    <div class="gallery-header">
+      <div>
+        <span class="label rv">Iz naše kuhinje</span>
+        <h2 class="title rv d1">Videti je <em>verjeti.</em></h2>
+      </div>
+      <p class="intro-text rv d2">Poglejte, kaj nastane, ko strast do kuhanja sreča ulico.</p>
+    </div>
+    <div class="gallery-grid rv d1">
+      <div class="gallery-item g-big">
+        <img src="images/slika2.jpg" alt="Oui Chef food truck" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="images/slika5.jpg" alt="La Shrimp sendvič" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="images/slika7.jpg" alt="Sendvič detail" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="images/slika3.jpg" alt="Kuhanje na plošči" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="images/ponudba.jpg" alt="Meni tabla" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O NAS -->
+<section class="section about-section" id="o-nas">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-imgs rv-left">
+        <img class="about-img-main" src="images/slika1.jpg" alt="Oui Chef chef" loading="lazy">
+        <img class="about-img-accent" src="images/slika4.jpg" alt="Chef pri delu" loading="lazy">
+      </div>
+      <div class="about-text">
+        <span class="label rv">O nas</span>
+        <h2 class="title rv d1">Kuhanje je <em>naša strast.</em></h2>
+        <p class="about-body rv d2">
+          Oui Chef je rojen iz preprostega prepričanja: da je najboljša hrana tista, ki jo narediš z vsem srcem — ne glede na to, ali ješ v restavraciji ali na ulici.<br><br>
+          Naš food truck prinaša restavracijske okuse neposredno k tebi. Sveže sestavine, premišljeni recepti in nasmeh vsakič, ko ti podamo griz.
+        </p>
+        <div class="about-stats rv d3">
+          <div><span class="stat-n">5+</span><span class="stat-l">Let izkušenj</span></div>
+          <div><span class="stat-n">20+</span><span class="stat-l">Festivalov letno</span></div>
+          <div><span class="stat-n">5</span><span class="stat-l">Specialitet</span></div>
+        </div>
+        <div style="margin-top:40px" class="rv d4">
+          <a href="#kontakt" class="btn-primary">Stopite v stik</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FESTIVALI -->
+<section class="section festivals-section" id="festivali">
+  <div class="container">
+    <div class="festivals-header">
+      <div>
+        <span class="label rv">Kje nas najdete</span>
+        <h2 class="title rv d1">Na vsakem <em>dobrem festivalu.</em></h2>
+      </div>
+      <p class="intro-text rv d2">Od mestnih trgov do največjih poletnih festivalov — pridemo k vam.</p>
+    </div>
+    <div class="festivals-grid">
+      <div class="festival-card rv d1">
+        <!-- fork & knife icon -->
+        <div class="f-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 2v7c0 1.1.9 2 2 2h4v11"/><path d="M9 2v20"/><path d="M15 2v6a4 4 0 004 4v10"/>
+          </svg>
+        </div>
+        <div class="f-title">Street Food Festivali</div>
+        <p class="f-desc">Redno prisotni na največjih street food festivalih po Sloveniji in regiji. Sledite nam na Instagramu za termine.</p>
+      </div>
+      <div class="festival-card rv d2">
+        <!-- calendar icon -->
+        <div class="f-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div class="f-title">Zasebne Prireditve</div>
+        <p class="f-desc">Poroke, korporativni dogodki, rojstni dnevi — prinesemo celoten food truck doživetje k vaši prireditvi.</p>
+      </div>
+      <div class="festival-card rv d3">
+        <!-- map pin icon -->
+        <div class="f-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div class="f-title">Trgi &amp; Pop-ups</div>
+        <p class="f-desc">Ob vikendih nas najdete na lokalnih trgih in pop-up lokacijah. Preverite našo lokacijo na Instagramu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <p class="ct">Želiš nas na tvojem dogodku?</p>
+  <p class="cs">Povabi Oui Chef na svojo poroko, festival ali korporativni event.</p>
+  <a href="#kontakt" class="btn-dark">Povpraša nas</a>
+</div>
+
+<!-- KONTAKT -->
+<section class="section contact-section" id="kontakt">
+  <div class="container">
+    <span class="label rv">Kontakt</span>
+    <h2 class="title rv d1">Pogovorimo <em>se.</em></h2>
+    <div class="contact-grid">
+      <div class="rv-left d1">
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="c-title">Telefon</div>
+            <div class="c-val"><a href="tel:+38640123456">+386 40 123 456</a></div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="c-title">E-pošta</div>
+            <div class="c-val"><a href="mailto:info@ouichef.com">info@ouichef.com</a></div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="c-title">Instagram</div>
+            <div class="c-val"><a href="https://instagram.com/ouichef" target="_blank">@ouichef</a></div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <div class="c-title">Lokacija</div>
+            <div class="c-val">Slovenija &amp; okolica<br>Sledite na Instagramu za točno lokacijo</div>
+          </div>
+        </div>
+      </div>
+      <div class="rv-right d2">
+        <div class="form-group">
+          <label>Ime in priimek</label>
+          <input type="text" placeholder="Jan Novak">
+        </div>
+        <div class="form-group">
+          <label>E-pošta</label>
+          <input type="email" placeholder="jan@example.com">
+        </div>
+        <div class="form-group">
+          <label>Vrsta povpraševanja</label>
+          <input type="text" placeholder="Festival, poroka, event…">
+        </div>
+        <div class="form-group">
+          <label>Sporočilo</label>
+          <textarea placeholder="Opišite vaš event, datum, lokacijo…"></textarea>
+        </div>
+        <a href="#" class="btn-primary">Pošlji povpraševanje</a>
+        <p class="form-note">Odgovorimo v 24 urah ✓</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><img src="images/logo.jpg" alt="Oui Chef"></div>
+  <span class="footer-copy">&copy; 2025 Oui Chef. Vse pravice pridržane.</span>
+  <span class="footer-credit">Spletna stran: <a href="https://pintsite.si" target="_blank">pintsite.si</a></span>
+</footer>
+
+<script>
+// NAV scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), {passive:true});
+
+// MOBILE MENU
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mobile-menu');
+burger.addEventListener('click', () => { mob.classList.toggle('open'); burger.classList.toggle('active'); });
+document.querySelectorAll('.ml').forEach(l => l.addEventListener('click', () => { mob.classList.remove('open'); burger.classList.remove('active'); }));
+
+// HERO PARALLAX — only on non-touch / desktop
+const heroBg = document.getElementById('hero-bg');
+const isMobile = window.matchMedia('(max-width:960px)').matches || ('ontouchstart' in window);
+if (!isMobile) {
+  window.addEventListener('scroll', () => {
+    if (scrollY < window.innerHeight) {
+      heroBg.style.transform = `translateY(${scrollY * 0.28}px)`;
+    }
+  }, {passive:true});
+}
+
+// "big smiles." — letter-by-letter colour pop on scroll into view
+const bigSmiles = document.getElementById('big-smiles');
+let smilesDone = false;
+function animateSmiles() {
+  if (smilesDone) return;
+  const text = bigSmiles.textContent;
+  bigSmiles.innerHTML = '';
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.textContent = ch;
+    s.style.cssText = `display:inline-block;transition:color .25s ${i*35}ms`;
+    s.style.color = 'inherit';
+    bigSmiles.appendChild(s);
+    setTimeout(() => s.style.color = '#E8A020', 900 + i * 35);
+  });
+  smilesDone = true;
+}
+// trigger after hero animates in
+setTimeout(animateSmiles, 1200);
+
+// SCROLL REVEAL
+const rvEls = document.querySelectorAll('.rv,.rv-left,.rv-right');
+const rvObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); }
+  });
+}, {threshold: 0.1, rootMargin:'0px 0px -40px 0px'});
+rvEls.forEach(el => rvObs.observe(el));
+
+// COUNTER ANIMATION for stats
+function animateCount(el, target, suffix='') {
+  let start = 0;
+  const dur = 1400;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const p = Math.min((timestamp - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('.stat-n');
+      const targets = [5, 20, 5];
+      const suffixes = ['+', '+', ''];
+      nums.forEach((n, i) => animateCount(n, targets[i], suffixes[i]));
+      statsObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.4});
+const statsSection = document.querySelector('.about-stats');
+if (statsSection) statsObs.observe(statsSection);
+</script>
+</body>
+</html>
