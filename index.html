@@ -37,7 +37,8 @@ nav.scrolled{
   backdrop-filter:blur(12px);
   box-shadow:0 1px 0 var(--gold-border);
 }
-.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:1px solid var(--gold);}
+a.nav-logo{display:flex;align-items:center}
+a.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:1px solid var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{
   color:var(--cream);text-decoration:none;
@@ -506,9 +507,7 @@ footer{
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo">
-    <a href="#vrh"><img src="images/logo.jpg" alt="Oui Chef"></a>
-  </div>
+  <a href="#vrh" class="nav-logo"><img src="images/logo.jpg" alt="Oui Chef"></a>
   <ul class="nav-links">
     <li><a href="#meni">Meni</a></li>
     <li><a href="#galerija">Galerija</a></li>
