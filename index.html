@@ -1039,7 +1039,7 @@ footer{
         </div>
       </div>
       <div class="termini-img rv-right d2">
-        <img src="images/slika2.jpg" alt="Oui Chef food truck" loading="lazy">
+        <img src="images/obisk.jpg" alt="Oui Chef food truck" loading="lazy">
       </div>
     </div>
   </div>
@@ -1078,7 +1078,7 @@ footer{
           </div>
           <div>
             <div class="c-title">E-pošta</div>
-            <div class="c-val"><a href="mailto:info@ouichef.com">info@ouichef.com</a></div>
+            <div class="c-val"><a href="mailto:info@ouichef.si">info@ouichef.si</a></div>
           </div>
         </div>
         <div class="c-detail">
@@ -1121,7 +1121,7 @@ footer{
           <label>Sporočilo</label>
           <textarea placeholder="Opišite vaš event, datum, lokacijo…"></textarea>
         </div>
-        <a href="#" class="btn-primary">Pošlji povpraševanje</a>
+        <a href="#" class="btn-primary" onclick="submitKontakt(event)">Pošlji povpraševanje</a>
         <p class="form-note">Odgovorimo v 24 urah ✓</p>
       </div>
     </div>
@@ -1281,20 +1281,75 @@ function submitRoaming(e) {
   const chosen = RF_ITEMS.map(it => ({label:it.label, vals:getChecked(it.id)}))
     .filter(it => it.vals.length)
     .map(it => `${it.label}: ${it.vals.join(', ')}`);
-  const body = [
-    `Ime: ${ime}`,
-    `E-pošta: ${email}`,
-    `Telefon: ${tel || '—'}`,
-    `Datum: ${datum || '—'}`,
-    `Lokacija: ${lok || '—'}`,
-    `Gostov: ${guestsVal}`,
-    '',
-    'Naročilo:',
-    ...chosen
-  ].join('%0A');
-  window.location.href = `mailto:info@ouichef.com?subject=Roaming%20povpra%C5%A1evanje%20-%20${encodeURIComponent(ime)}&body=${body}`;
+
+  const btn = document.getElementById('rf-submit');
+  btn.textContent = 'Pošiljam…';
+  btn.style.pointerEvents = 'none';
+  const fd = new FormData();
+  fd.append('ime', ime);
+  fd.append('email', email);
+  fd.append('tel', tel);
+  fd.append('datum', datum);
+  fd.append('lokacija', lok);
+  fd.append('gosti', guestsVal);
+  fd.append('narocilo', chosen.join('\n'));
+  fetch('send-roaming.php', { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        btn.textContent = '✓ Povpraševanje poslano!';
+        btn.style.background = '#4caf50';
+        document.querySelectorAll('#rf-ime,#rf-email,#rf-tel,#rf-datum,#rf-lokacija').forEach(el => el.value = '');
+        document.querySelectorAll('.rf-chip input').forEach(cb => { cb.checked = false; cb.closest('.rf-chip').classList.remove('checked'); });
+        document.getElementById('rf-summary').style.display = 'none';
+      } else {
+        btn.textContent = 'Napaka — poskusi znova';
+        btn.style.background = '#e05050';
+        btn.style.pointerEvents = 'auto';
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Napaka — poskusi znova';
+      btn.style.background = '#e05050';
+      btn.style.pointerEvents = 'auto';
+    });
 }
 
+
+function submitKontakt(e) {
+  e.preventDefault();
+  const btn   = e.target;
+  const ime   = document.querySelector('#kontakt input[type=text]')?.value.trim();
+  const email = document.querySelector('#kontakt input[type=email]')?.value.trim();
+  const vrsta = document.querySelectorAll('#kontakt input[type=text]')[1]?.value.trim();
+  const msg   = document.querySelector('#kontakt textarea')?.value.trim();
+  if (!ime || !email) { alert('Prosimo izpolnite ime in e-pošto.'); return; }
+  btn.textContent = 'Pošiljam…';
+  btn.style.pointerEvents = 'none';
+  const fd = new FormData();
+  fd.append('ime', ime);
+  fd.append('email', email);
+  fd.append('vrsta', vrsta || '');
+  fd.append('sporocilo', msg || '');
+  fetch('send-kontakt.php', { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        btn.textContent = '✓ Sporočilo poslano!';
+        btn.style.background = '#4caf50';
+        document.querySelectorAll('#kontakt input, #kontakt textarea').forEach(el => el.value = '');
+      } else {
+        btn.textContent = 'Napaka — poskusi znova';
+        btn.style.background = '#e05050';
+        btn.style.pointerEvents = 'auto';
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Napaka — poskusi znova';
+      btn.style.background = '#e05050';
+      btn.style.pointerEvents = 'auto';
+    });
+}
 </script>
 </body>
 </html>
