@@ -538,6 +538,104 @@ footer{
   .termini-img{height:220px}
   .termin-row{gap:16px}
 }
+
+/* ── ROAMING ── */
+.roaming-section{background:var(--brown-mid)}
+.roaming-intro{
+  display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:center;
+  margin-bottom:80px;
+}
+.roaming-intro-img{height:460px;overflow:hidden}
+.roaming-intro-img img{width:100%;height:100%;object-fit:cover;display:block}
+.roaming-mix{
+  display:flex;gap:32px;margin-top:32px;
+}
+.roaming-mix-col{flex:1}
+.roaming-mix-label{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
+  font-style:italic;color:var(--gold);margin-bottom:8px;
+}
+.roaming-mix-items{font-size:.88rem;color:var(--cream-dim);line-height:1.8}
+
+/* FORM */
+.roaming-form-wrap{
+  background:var(--brown-dark);border:1px solid var(--gold-border);
+  padding:48px;
+}
+.roaming-form-wrap h3{
+  font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;
+  color:var(--cream);margin-bottom:8px;
+}
+.roaming-form-wrap .form-sub{
+  font-size:.9rem;color:var(--cream-dim);margin-bottom:40px;
+}
+.rf-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.rf-full{grid-column:span 2}
+.rf-section-title{
+  font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin:28px 0 16px;grid-column:span 2;
+  padding-bottom:8px;border-bottom:1px solid var(--gold-border);
+}
+.rf-item{
+  background:rgba(255,255,255,.03);border:1px solid var(--gold-border);
+  padding:16px 18px;display:flex;flex-direction:column;gap:8px;
+}
+.rf-item-name{
+  font-size:.82rem;font-weight:600;color:var(--cream);
+}
+.rf-item-desc{font-size:.75rem;color:rgba(245,240,232,.4);line-height:1.5}
+.rf-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.rf-chip{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(232,160,32,.08);border:1px solid var(--gold-border);
+  color:var(--cream-dim);font-size:.75rem;font-weight:500;
+  padding:5px 10px;cursor:default;
+  transition:background .2s,border-color .2s,color .2s;
+  user-select:none;
+}
+.rf-chip input[type=checkbox]{display:none}
+.rf-chip.checked{
+  background:rgba(232,160,32,.18);border-color:var(--gold);color:var(--cream);
+}
+.rf-chip.checked::before{
+  content:'✓';color:var(--gold);font-size:.7rem;font-weight:700;
+}
+.rf-chip:hover{border-color:rgba(232,160,32,.5);color:var(--cream)}
+.rf-guests{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--gold-border);overflow:hidden;
+  width:fit-content;
+}
+.rf-guests button{
+  background:transparent;border:none;color:var(--gold);
+  width:40px;height:40px;font-size:1.1rem;cursor:pointer;
+  transition:background .2s;font-family:'Inter',sans-serif;
+}
+.rf-guests button:hover{background:rgba(232,160,32,.1)}
+.rf-guests span{
+  min-width:52px;text-align:center;font-size:.95rem;
+  font-weight:600;color:var(--cream);padding:0 4px;
+}
+.rf-summary{
+  background:rgba(232,160,32,.06);border:1px solid var(--gold-border);
+  padding:20px 24px;margin-top:8px;
+  font-size:.82rem;color:var(--cream-dim);line-height:1.9;
+  display:none;
+}
+.rf-summary strong{color:var(--gold);font-weight:600}
+.rf-note{font-size:.75rem;color:rgba(245,240,232,.3);margin-top:12px}
+
+@media(max-width:960px){
+  .roaming-intro{grid-template-columns:1fr;gap:40px}
+  .roaming-intro-img{height:280px}
+  .roaming-form-wrap{padding:32px 24px}
+  .rf-grid{grid-template-columns:1fr}
+  .rf-full,.rf-section-title{grid-column:span 1}
+}
+@media(max-width:600px){
+  .roaming-mix{flex-direction:column;gap:20px}
+  .roaming-form-wrap{padding:24px 18px}
+}
 </style>
 </head>
 <body>
@@ -547,6 +645,7 @@ footer{
   <a href="#vrh" class="nav-logo"><img src="images/logo.jpg" alt="Oui Chef"></a>
   <ul class="nav-links">
     <li><a href="#meni">Meni</a></li>
+    <li><a href="#roaming">Roaming</a></li>
     <li><a href="#galerija">Galerija</a></li>
     <li><a href="#o-nas">O nas</a></li>
     <li><a href="#termini">Termini</a></li>
@@ -559,6 +658,7 @@ footer{
 
 <div class="mobile-menu" id="mobile-menu">
   <a href="#meni" class="ml">Meni</a>
+  <a href="#roaming" class="ml">Roaming</a>
   <a href="#galerija" class="ml">Galerija</a>
   <a href="#o-nas" class="ml">O nas</a>
   <a href="#termini" class="ml">Termini</a>
@@ -660,6 +760,173 @@ footer{
   </div>
 </section>
 
+
+<!-- ROAMING -->
+<section class="section roaming-section" id="roaming">
+  <div class="container">
+
+    <div class="roaming-intro">
+      <div>
+        <span class="label rv">Roaming postrežba</span>
+        <h2 class="title rv d1">Mix &amp; <em>match.</em></h2>
+        <p class="intro-text rv d2" style="margin-top:20px">
+          Naša roaming postrežba prinese sladico ali slano presenečenje direktno med vaše goste — elegantno, okusno in prilagojeno vašemu dogodku.
+        </p>
+        <div class="roaming-mix rv d3">
+          <div class="roaming-mix-col">
+            <div class="roaming-mix-label">Sladko</div>
+            <div class="roaming-mix-items">Tiramisu<br>Grmada<br>Cheesecake<br>Hrustljavi kanoli</div>
+          </div>
+          <div class="roaming-mix-col">
+            <div class="roaming-mix-label">Slano</div>
+            <div class="roaming-mix-items">Siri in oreščki<br>Sveže ostrige<br>Kraljevi kaviar</div>
+          </div>
+        </div>
+      </div>
+      <div class="roaming-intro-img rv-right d2">
+        <img src="images/slika1.jpg" alt="Roaming postrežba" loading="lazy">
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="roaming-form-wrap rv d1">
+      <h3>Sestavi svojo <em style="font-style:italic;color:var(--gold)">ponudbo.</em></h3>
+      <p class="form-sub">Obkljukajte željene sladice in okuse, vpišite okvirno število gostov — mi poskrbimo za vse ostalo.</p>
+
+      <div class="rf-grid" id="rf-grid">
+
+        <!-- GOSTJE -->
+        <div class="rf-section-title">Približno število gostov</div>
+        <div class="rf-full" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <div class="rf-guests">
+            <button type="button" onclick="changeGuests(-10)">−</button>
+            <span id="guests-val">50</span>
+            <button type="button" onclick="changeGuests(10)">+</button>
+          </div>
+          <span style="font-size:.82rem;color:var(--cream-dim)">gostov <span style="opacity:.5;font-size:.75rem">(okvirna številka)</span></span>
+          <input type="range" id="guests-range" min="10" max="500" step="10" value="50"
+            oninput="syncGuests(this.value)"
+            style="flex:1;min-width:120px;accent-color:var(--gold);cursor:pointer">
+        </div>
+
+        <!-- SLADKO -->
+        <div class="rf-section-title">Sladke sladice</div>
+        <div class="rf-full" style="font-size:.75rem;color:rgba(245,240,232,.35);margin-top:-8px;margin-bottom:4px">Obkljukajte željene okuse — izberete lahko več možnosti.</div>
+
+        <div class="rf-item rv d1">
+          <div class="rf-item-name">Tiramisu</div>
+          <div class="rf-item-desc">Klasičen italijanski tiramisu s tremi okusi po izbiri.</div>
+          <div class="rf-chips" id="s-tiramisu">
+            <label class="rf-chip"><input type="checkbox" name="s-tiramisu" value="Klasičen" onchange="updateSummary()">Klasičen</label>
+<label class="rf-chip"><input type="checkbox" name="s-tiramisu" value="Pomarančni" onchange="updateSummary()">Pomarančni</label>
+<label class="rf-chip"><input type="checkbox" name="s-tiramisu" value="Jagodičevje" onchange="updateSummary()">Jagodičevje</label>
+          </div>
+        </div>
+
+        <div class="rf-item rv d2">
+          <div class="rf-item-name">Grmada</div>
+          <div class="rf-item-desc">Tradicionalna slovenska sladica v modernem preoblačilu.</div>
+          <div class="rf-chips" id="s-grmada">
+            <label class="rf-chip"><input type="checkbox" name="s-grmada" value="Klasična" onchange="updateSummary()">Klasična</label>
+<label class="rf-chip"><input type="checkbox" name="s-grmada" value="Čokoladna" onchange="updateSummary()">Čokoladna</label>
+<label class="rf-chip"><input type="checkbox" name="s-grmada" value="Vaniljeva" onchange="updateSummary()">Vaniljeva</label>
+          </div>
+        </div>
+
+        <div class="rf-item rv d3">
+          <div class="rf-item-name">Cheesecake</div>
+          <div class="rf-item-desc">Kremast new york cheesecake s svežimi prelivi.</div>
+          <div class="rf-chips" id="s-cheesecake">
+            <label class="rf-chip"><input type="checkbox" name="s-cheesecake" value="Jagodičevje" onchange="updateSummary()">Jagodičevje</label>
+<label class="rf-chip"><input type="checkbox" name="s-cheesecake" value="Limeta" onchange="updateSummary()">Limeta</label>
+<label class="rf-chip"><input type="checkbox" name="s-cheesecake" value="Mango" onchange="updateSummary()">Mango</label>
+          </div>
+        </div>
+
+        <div class="rf-item rv d4">
+          <div class="rf-item-name">Hrustljavi kanoli</div>
+          <div class="rf-item-desc">Sicilski kanoli s hrustljavo lupino in svilnatim nadevom.</div>
+          <div class="rf-chips" id="s-kanoli">
+            <label class="rf-chip"><input type="checkbox" name="s-kanoli" value="Ricotta &amp; vanilija" onchange="updateSummary()">Ricotta &amp; vanilija</label>
+<label class="rf-chip"><input type="checkbox" name="s-kanoli" value="Čokolada &amp; orehi" onchange="updateSummary()">Čokolada &amp; orehi</label>
+<label class="rf-chip"><input type="checkbox" name="s-kanoli" value="Pistacija" onchange="updateSummary()">Pistacija</label>
+          </div>
+        </div>
+
+        <!-- SLANO -->
+        <div class="rf-section-title">Slana postrežba</div>
+        <div class="rf-full" style="font-size:.75rem;color:rgba(245,240,232,.35);margin-top:-8px;margin-bottom:4px">Obkljukajte željene okuse — izberete lahko več možnosti.</div>
+
+        <div class="rf-item rv d1">
+          <div class="rf-item-name">Siri in oreščki</div>
+          <div class="rf-item-desc">Izbor zrelih sirov s sezonskimi oreščki in suhim sadjem.</div>
+          <div class="rf-chips" id="s-siri">
+            <label class="rf-chip"><input type="checkbox" name="s-siri" value="Mehki siri" onchange="updateSummary()">Mehki siri</label>
+<label class="rf-chip"><input type="checkbox" name="s-siri" value="Trdi siri" onchange="updateSummary()">Trdi siri</label>
+<label class="rf-chip"><input type="checkbox" name="s-siri" value="Miks" onchange="updateSummary()">Miks</label>
+          </div>
+        </div>
+
+        <div class="rf-item rv d2">
+          <div class="rf-item-name">Sveže ostrige</div>
+          <div class="rf-item-desc">Sveže ostrige s klasičnimi accompagnamenti.</div>
+          <div class="rf-chips" id="s-ostrige">
+            <label class="rf-chip"><input type="checkbox" name="s-ostrige" value="Fine de Claire" onchange="updateSummary()">Fine de Claire</label>
+<label class="rf-chip"><input type="checkbox" name="s-ostrige" value="Gillardeau" onchange="updateSummary()">Gillardeau</label>
+<label class="rf-chip"><input type="checkbox" name="s-ostrige" value="Miks" onchange="updateSummary()">Miks</label>
+          </div>
+        </div>
+
+        <div class="rf-item rv d3">
+          <div class="rf-item-name">Kraljevi kaviar</div>
+          <div class="rf-item-desc">Premium kaviar z brioche kruhkom in crème fraîche.</div>
+          <div class="rf-chips" id="s-kaviar">
+            <label class="rf-chip"><input type="checkbox" name="s-kaviar" value="Beluga" onchange="updateSummary()">Beluga</label>
+<label class="rf-chip"><input type="checkbox" name="s-kaviar" value="Oscietra" onchange="updateSummary()">Oscietra</label>
+<label class="rf-chip"><input type="checkbox" name="s-kaviar" value="Sevruga" onchange="updateSummary()">Sevruga</label>
+          </div>
+        </div>
+
+        <!-- KONTAKT -->
+        <div class="rf-section-title">Vaši podatki</div>
+
+        <div class="form-group" style="margin:0">
+          <label>Ime in priimek</label>
+          <input type="text" id="rf-ime" placeholder="Jan Novak">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>E-pošta</label>
+          <input type="email" id="rf-email" placeholder="jan@example.com">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Telefon</label>
+          <input type="text" id="rf-tel" placeholder="+386 40 000 000">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Datum dogodka</label>
+          <input type="date" id="rf-datum">
+        </div>
+        <div class="form-group rf-full" style="margin:0">
+          <label>Lokacija / opombe</label>
+          <input type="text" id="rf-lokacija" placeholder="Ljubljana, dvorana X…">
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="rf-full">
+          <div class="rf-summary" id="rf-summary"></div>
+        </div>
+
+        <div class="rf-full" style="margin-top:8px">
+          <a href="#" class="btn-primary" id="rf-submit" onclick="submitRoaming(event)">Pošlji povpraševanje</a>
+          <p class="rf-note">Odgovorimo v 24 urah. Ponudbo prilagodimo vašim željam ✓</p>
+        </div>
+
+      </div><!-- /rf-grid -->
+    </div><!-- /roaming-form-wrap -->
+
+  </div>
+</section>
+
 <!-- GALERIJA -->
 <section class="section gallery-section" id="galerija">
   <div class="container">
@@ -707,7 +974,7 @@ footer{
         </p>
         <div class="about-stats rv d3">
           <div><span class="stat-n">10+</span><span class="stat-l">Let izkušenj</span></div>
-          <div><span class="stat-n">50+</span><span class="stat-l">Festivalov letno</span></div>
+          <div><span class="stat-n">50+</span><span class="stat-l">Cateringov letno</span></div>
           <div><span class="stat-n">5</span><span class="stat-l">Specialitet</span></div>
         </div>
         <div style="margin-top:40px" class="rv d4">
@@ -932,7 +1199,7 @@ const statsObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const nums = e.target.querySelectorAll('.stat-n');
-      const targets = [5, 20, 5];
+      const targets = [10, 50, 5];
       const suffixes = ['+', '+', ''];
       nums.forEach((n, i) => animateCount(n, targets[i], suffixes[i]));
       statsObs.unobserve(e.target);
@@ -964,6 +1231,72 @@ fetch('events.json')
     }).join('');
   })
   .catch(() => {});
+
+// ROAMING FORM
+let guestsVal = 50;
+function changeGuests(d) {
+  guestsVal = Math.max(10, Math.min(500, guestsVal + d));
+  document.getElementById('guests-val').textContent = guestsVal;
+  document.getElementById('guests-range').value = guestsVal;
+  updateSummary();
+}
+function syncGuests(v) {
+  guestsVal = parseInt(v);
+  document.getElementById('guests-val').textContent = guestsVal;
+  updateSummary();
+}
+const RF_ITEMS = [
+  {id:'s-tiramisu', label:'Tiramisu'},
+  {id:'s-grmada',   label:'Grmada'},
+  {id:'s-cheesecake',label:'Cheesecake'},
+  {id:'s-kanoli',   label:'Kanoli'},
+  {id:'s-siri',     label:'Siri in oreščki'},
+  {id:'s-ostrige',  label:'Ostrige'},
+  {id:'s-kaviar',   label:'Kaviar'},
+];
+function getChecked(id) {
+  return [...document.querySelectorAll(`#${id} input[type=checkbox]:checked`)].map(c => c.value);
+}
+// sync chip visual state
+document.addEventListener('change', e => {
+  if (e.target.type === 'checkbox' && e.target.closest('.rf-chips')) {
+    e.target.closest('.rf-chip').classList.toggle('checked', e.target.checked);
+  }
+});
+function updateSummary() {
+  const chosen = RF_ITEMS.map(it => ({label:it.label, vals:getChecked(it.id)})).filter(it => it.vals.length);
+  const box = document.getElementById('rf-summary');
+  if (!chosen.length) { box.style.display='none'; return; }
+  box.style.display='block';
+  box.innerHTML = '<strong>Povzetek naročila:</strong><br>' +
+    chosen.map(it => `${it.label}: <strong>${it.vals.join(', ')}</strong>`).join('<br>') +
+    `<br>Število gostov: <strong>${guestsVal}</strong>`;
+}
+function submitRoaming(e) {
+  e.preventDefault();
+  const ime    = document.getElementById('rf-ime').value.trim();
+  const email  = document.getElementById('rf-email').value.trim();
+  const tel    = document.getElementById('rf-tel').value.trim();
+  const datum  = document.getElementById('rf-datum').value;
+  const lok    = document.getElementById('rf-lokacija').value.trim();
+  if (!ime || !email) { alert('Prosimo izpolnite ime in e-pošto.'); return; }
+  const chosen = RF_ITEMS.map(it => ({label:it.label, vals:getChecked(it.id)}))
+    .filter(it => it.vals.length)
+    .map(it => `${it.label}: ${it.vals.join(', ')}`);
+  const body = [
+    `Ime: ${ime}`,
+    `E-pošta: ${email}`,
+    `Telefon: ${tel || '—'}`,
+    `Datum: ${datum || '—'}`,
+    `Lokacija: ${lok || '—'}`,
+    `Gostov: ${guestsVal}`,
+    '',
+    'Naročilo:',
+    ...chosen
+  ].join('%0A');
+  window.location.href = `mailto:info@ouichef.com?subject=Roaming%20povpra%C5%A1evanje%20-%20${encodeURIComponent(ime)}&body=${body}`;
+}
+
 </script>
 </body>
 </html>
