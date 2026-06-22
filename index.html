@@ -941,6 +941,29 @@ const statsObs = new IntersectionObserver(entries => {
 }, {threshold: 0.4});
 const statsSection = document.querySelector('.about-stats');
 if (statsSection) statsObs.observe(statsSection);
+
+// TERMINI fetch
+fetch('events.json')
+  .then(r => r.ok ? r.json() : [])
+  .then(evs => {
+    const now = new Date();
+    const today = now.getFullYear() + '-' +
+      String(now.getMonth()+1).padStart(2,'0') + '-' +
+      String(now.getDate()).padStart(2,'0');
+    const future = evs.filter(e => e.datum >= today).slice(0, 4);
+    const list = document.getElementById('termini-list');
+    if (!list) return;
+    if (!future.length) return;
+    list.innerHTML = future.map(e => {
+      const d = new Date(e.datum);
+      const label = d.toLocaleDateString('sl-SI', {day:'2-digit', month:'2-digit'}).replace('. ','.');
+      return `<div class="termin-row">
+        <span class="termin-datum">${label}</span>
+        <span class="termin-opis">${e.opis}</span>
+      </div>`;
+    }).join('');
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
