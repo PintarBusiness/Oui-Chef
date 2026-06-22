@@ -250,8 +250,6 @@ a.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:
 }
 .mc .mi-tag{margin-top:16px;align-self:flex-start}
 
-/* pommes removed — same card as others */
-
 /* ── GALERIJA ── */
 .gallery-section{background:var(--brown-dark)}
 .gallery-header{
@@ -302,7 +300,6 @@ a.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:
   transition:background .25s;
 }
 .festival-card:hover{background:var(--brown)}
-/* clean SVG icon wrapper */
 .f-icon{
   width:40px;height:40px;margin-bottom:24px;
   color:var(--gold);opacity:.8;
@@ -343,7 +340,6 @@ a.nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:50%;border:
   padding:28px 0;border-bottom:1px solid var(--gold-border);
 }
 .c-detail:last-child{border-bottom:none}
-/* clean icon */
 .c-icon{
   width:20px;height:20px;min-width:20px;
   margin-top:2px;color:var(--gold);opacity:.75;
@@ -394,7 +390,6 @@ footer{
 .rv-right{opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s ease}
 .rv-right.in{opacity:1;transform:translateX(0)}
 
-/* stagger delay helpers */
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
 .d4{transition-delay:.4s}.d5{transition-delay:.5s}
 
@@ -406,34 +401,20 @@ footer{
   nav.scrolled{padding:13px 24px}
   .container{padding:0 24px}
   .section{padding:72px 0}
-
-  /* grids → single column */
   .about-grid,
   .contact-grid{grid-template-columns:1fr;gap:48px}
-
-  /* about images stacked */
   .about-imgs{height:360px}
   .about-img-accent{width:42%;height:42%}
-
-  /* gallery: 2 cols, big item spans both */
   .gallery-grid{
     grid-template-columns:1fr 1fr;
     grid-template-rows:200px 200px 200px;
     gap:3px;
   }
   .g-big{grid-row:span 1;grid-column:span 2}
-
-  /* menu cards 2 cols on tablet */
   .menu-cards{grid-template-columns:repeat(2,1fr)}
-
-  /* festivals 2 cols */
   .festivals-grid{grid-template-columns:1fr 1fr}
   .festivals-header,.gallery-header{flex-direction:column;align-items:flex-start;gap:12px}
-
-  /* footer */
   footer{flex-direction:column;align-items:flex-start;padding:36px 24px;gap:12px}
-
-  /* cta strip */
   .cta-strip{padding:72px 24px}
 }
 
@@ -442,28 +423,18 @@ footer{
   nav.scrolled{padding:11px 20px}
   .container{padding:0 20px}
   .section{padding:60px 0}
-
-  /* hero full height, text legible */
   .hero{height:100svh;min-height:560px}
   .hero-content{padding:0 20px}
   .hero-btns{flex-direction:column;align-items:center;gap:12px}
   .hero-btns a{width:100%;max-width:280px;text-align:center}
   .hero-scroll{display:none}
-
-  /* tagline strip smaller */
   .tagline-strip{padding:12px 0}
   .tagline-track span{font-size:.88rem;padding:0 20px}
-
-  /* titles */
   .title{font-size:clamp(1.9rem,8vw,2.8rem)}
-
-  /* menu cards single col */
   .menu-cards{grid-template-columns:1fr}
   .mc-body{padding:22px 20px 26px}
   .mc-name{font-size:1.2rem}
   .mc-price{font-size:1.05rem}
-
-  /* gallery single col */
   .gallery-grid{
     grid-template-columns:1fr;
     grid-template-rows:none;
@@ -471,8 +442,6 @@ footer{
   }
   .gallery-item{height:260px}
   .g-big{grid-column:auto;grid-row:auto}
-
-  /* about */
   .about-imgs{height:280px}
   .about-img-accent{display:none}
   .about-stats{
@@ -480,26 +449,94 @@ footer{
     padding-top:28px;
   }
   .stat-n{font-size:2.2rem}
-
-  /* festivals single col */
   .festivals-grid{grid-template-columns:1fr;background:none;gap:1px}
   .festival-card{padding:32px 22px}
-
-  /* cta */
   .cta-strip{padding:60px 20px}
   .cta-strip .ct{font-size:clamp(1.7rem,7vw,2.4rem)}
   .btn-dark{display:block;text-align:center}
-
-  /* contact */
   .c-detail{padding:22px 0}
   .form-group input,
-  .form-group textarea{font-size:16px} /* prevent iOS zoom */
-
-  /* footer */
+  .form-group textarea{font-size:16px}
   footer{padding:32px 20px}
-
-  /* menu photo shorter */
   .menu-photo{height:280px}
+}
+
+/* ── LAPTOP: večji logo ── */
+@media(min-width:961px) and (max-height:860px){
+  a.nav-logo img{
+    height:52px;
+    width:52px;
+  }
+  nav.scrolled a.nav-logo img{
+    height:46px;
+    width:46px;
+  }
+}
+
+/* ── LAPTOP (nizek ekran ≤860px višine) — manjši headline ── */
+@media(min-width:961px) and (max-height:860px){
+  .hero-headline{
+    font-size:clamp(2rem,5vw,4.2rem);
+  }
+  .hero-eyebrow{margin-bottom:16px}
+  .hero-sub{margin-bottom:28px}
+}
+
+/* ── LAPTOP: večji logo ── */
+@media(min-width:961px) and (max-height:860px){
+  a.nav-logo img{
+    height:52px;
+    width:52px;
+  }
+  nav.scrolled a.nav-logo img{
+    height:46px;
+    width:46px;
+  }
+}
+
+/* ── LAPTOP (nizek ekran ≤860px višine) — manjši headline ── */
+@media(min-width:961px) and (max-height:860px){
+  .hero-headline{
+    font-size:clamp(2rem,5vw,4.2rem);
+  }
+  .hero-eyebrow{margin-bottom:16px}
+  .hero-sub{margin-bottom:28px}
+}
+
+/* ── TERMINI ── */
+.termini-section{background:var(--brown-dark)}
+.termini-grid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;margin-top:56px}
+.termini-list{display:flex;flex-direction:column;gap:0}
+.termin-row{
+  display:flex;align-items:center;gap:24px;
+  padding:20px 0;border-bottom:1px solid var(--gold-border);
+}
+.termin-row:first-child{border-top:1px solid var(--gold-border)}
+.termin-datum{
+  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(232,160,32,.1);color:var(--gold);
+  padding:6px 12px;white-space:nowrap;min-width:72px;text-align:center;
+  border:1px solid var(--gold-border);flex-shrink:0;
+}
+.termin-opis{font-size:.92rem;color:var(--cream-dim);line-height:1.5}
+.termini-empty{
+  font-size:.85rem;color:rgba(245,240,232,.3);
+  padding:32px 0;border-top:1px solid var(--gold-border);
+  border-bottom:1px solid var(--gold-border);font-style:italic;
+}
+.termini-img{
+  position:relative;height:480px;
+}
+.termini-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+@media(max-width:960px){
+  .termini-grid{grid-template-columns:1fr;gap:40px}
+  .termini-img{height:300px}
+}
+@media(max-width:600px){
+  .termini-img{height:220px}
+  .termin-row{gap:16px}
 }
 </style>
 </head>
@@ -512,6 +549,7 @@ footer{
     <li><a href="#meni">Meni</a></li>
     <li><a href="#galerija">Galerija</a></li>
     <li><a href="#o-nas">O nas</a></li>
+    <li><a href="#termini">Termini</a></li>
     <li><a href="#festivali">Festivali</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
   </ul>
@@ -523,6 +561,7 @@ footer{
   <a href="#meni" class="ml">Meni</a>
   <a href="#galerija" class="ml">Galerija</a>
   <a href="#o-nas" class="ml">O nas</a>
+  <a href="#termini" class="ml">Termini</a>
   <a href="#festivali" class="ml">Festivali</a>
   <a href="#kontakt" class="ml">Kontakt</a>
 </div>
@@ -572,7 +611,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika5.jpg" alt="Royal Dog" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">Royal Dog</span><span class="mc-price">11,50 €</span></div>
+          <div class="mc-top"><span class="mc-name">Royal Dog</span></div>
           <p class="mc-desc">Kraljevski hotdog za resne jedce. Hrustljava hrenovka, domač hrenov preliv in karamelizirani čebula.</p>
           <span class="mi-tag">Bestseller</span>
         </div>
@@ -580,7 +619,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika7.jpg" alt="Beef Bun" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">Beef Bun</span><span class="mc-price">12,50 €</span></div>
+          <div class="mc-top"><span class="mc-name">Beef Bun</span></div>
           <p class="mc-desc">Sočna govedina, zlato zapečeni robovi in klasika, ki vedno zmaga. Brioche, cheddar, čebulna marmelada.</p>
           <span class="mi-tag">Klasika</span>
         </div>
@@ -588,7 +627,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika5.jpg" alt="Mr. Fancy" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">Mr. Fancy</span><span class="mc-price">13,50 €</span></div>
+          <div class="mc-top"><span class="mc-name">Mr. Fancy</span></div>
           <p class="mc-desc">Za malo bolj fine brbončice — mehka govedina, sveža rukola in eleganca tartufa za piko na i.</p>
           <span class="mi-tag">Premium</span>
         </div>
@@ -596,7 +635,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika7.jpg" alt="La Shrimp" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">La Shrimp</span><span class="mc-price">13,00 €</span></div>
+          <div class="mc-top"><span class="mc-name">La Shrimp</span></div>
           <p class="mc-desc">Poletni okus v štrucki — kozice, limeta in tisti pravi morski vibe. Sveže rdece zelje, avokadova krema.</p>
           <span class="mi-tag">Svežina</span>
         </div>
@@ -604,7 +643,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika5.jpg" alt="Mango Shrimp" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">Mango Shrimp</span><span class="mc-price">14,00 €</span></div>
+          <div class="mc-top"><span class="mc-name">Mango Shrimp</span></div>
           <p class="mc-desc">Tropska svežina — avokado, mango in kozice za pravi okus poletja. Mango salsa in chili majoneza.</p>
           <span class="mi-tag">Tropsko</span>
         </div>
@@ -612,7 +651,7 @@ footer{
       <div class="mc">
         <div class="mc-img"><img src="images/slika7.jpg" alt="Pommes" loading="lazy"></div>
         <div class="mc-body">
-          <div class="mc-top"><span class="mc-name">Pommes</span><span class="mc-price">4,00 €</span></div>
+          <div class="mc-top"><span class="mc-name">Pommes</span></div>
           <p class="mc-desc">Zunaj hrustljav, znotraj mehak — tako dober, da ga boš zahteval ob vsakem sendviču.</p>
           <span class="mi-tag">Obvezna priloga</span>
         </div>
@@ -667,8 +706,8 @@ footer{
           Naš food truck prinaša restavracijske okuse neposredno k tebi. Sveže sestavine, premišljeni recepti in nasmeh vsakič, ko ti podamo griz.
         </p>
         <div class="about-stats rv d3">
-          <div><span class="stat-n">5+</span><span class="stat-l">Let izkušenj</span></div>
-          <div><span class="stat-n">20+</span><span class="stat-l">Festivalov letno</span></div>
+          <div><span class="stat-n">10+</span><span class="stat-l">Let izkušenj</span></div>
+          <div><span class="stat-n">50+</span><span class="stat-l">Festivalov letno</span></div>
           <div><span class="stat-n">5</span><span class="stat-l">Specialitet</span></div>
         </div>
         <div style="margin-top:40px" class="rv d4">
@@ -691,7 +730,6 @@ footer{
     </div>
     <div class="festivals-grid">
       <div class="festival-card rv d1">
-        <!-- fork & knife icon -->
         <div class="f-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 2v7c0 1.1.9 2 2 2h4v11"/><path d="M9 2v20"/><path d="M15 2v6a4 4 0 004 4v10"/>
@@ -701,7 +739,6 @@ footer{
         <p class="f-desc">Redno prisotni na največjih street food festivalih po Sloveniji in regiji. Sledite nam na Instagramu za termine.</p>
       </div>
       <div class="festival-card rv d2">
-        <!-- calendar icon -->
         <div class="f-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
@@ -711,7 +748,6 @@ footer{
         <p class="f-desc">Poroke, korporativni dogodki, rojstni dnevi — prinesemo celoten food truck doživetje k vaši prireditvi.</p>
       </div>
       <div class="festival-card rv d3">
-        <!-- map pin icon -->
         <div class="f-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
@@ -719,6 +755,26 @@ footer{
         </div>
         <div class="f-title">Trgi &amp; Pop-ups</div>
         <p class="f-desc">Ob vikendih nas najdete na lokalnih trgih in pop-up lokacijah. Preverite našo lokacijo na Instagramu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TERMINI -->
+<section class="section termini-section" id="termini">
+  <div class="container">
+    <div class="termini-grid">
+      <div>
+        <span class="label rv">Kje nas najdeš</span>
+        <h2 class="title rv d1">Naši <em>termini.</em></h2>
+        <p class="intro-text rv d2" style="margin-top:20px;margin-bottom:0">Redno nastopamo na festivalih in prireditvah po vsej Sloveniji. Preveri urnik in pridi na obisk.</p>
+        <div class="termini-list rv d3" id="termini-list" style="margin-top:40px">
+          <div class="termini-empty">Trenutno ni objavljenih terminov. Sledite nam na Instagramu.</div>
+        </div>
+      </div>
+      <div class="termini-img rv-right d2">
+        <img src="images/slika2.jpg" alt="Oui Chef food truck" loading="lazy">
       </div>
     </div>
   </div>
@@ -812,20 +868,18 @@ footer{
   <div class="footer-logo"><img src="images/logo.jpg" alt="Oui Chef"></div>
   <span class="footer-copy">&copy; 2025 Oui Chef. Vse pravice pridržane.</span>
   <span class="footer-credit">Spletna stran: <a href="https://pintsite.si" target="_blank">pintsite.si</a></span>
+  <span class="footer-credit"><a href="admin.php">admin</a></span>
 </footer>
 
 <script>
-// NAV scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), {passive:true});
 
-// MOBILE MENU
 const burger = document.getElementById('burger');
 const mob = document.getElementById('mobile-menu');
 burger.addEventListener('click', () => { mob.classList.toggle('open'); burger.classList.toggle('active'); });
 document.querySelectorAll('.ml').forEach(l => l.addEventListener('click', () => { mob.classList.remove('open'); burger.classList.remove('active'); }));
 
-// HERO PARALLAX — only on non-touch / desktop
 const heroBg = document.getElementById('hero-bg');
 const isMobile = window.matchMedia('(max-width:960px)').matches || ('ontouchstart' in window);
 if (!isMobile) {
@@ -836,7 +890,6 @@ if (!isMobile) {
   }, {passive:true});
 }
 
-// "big smiles." — letter-by-letter colour pop on scroll into view
 const bigSmiles = document.getElementById('big-smiles');
 let smilesDone = false;
 function animateSmiles() {
@@ -853,10 +906,8 @@ function animateSmiles() {
   });
   smilesDone = true;
 }
-// trigger after hero animates in
 setTimeout(animateSmiles, 1200);
 
-// SCROLL REVEAL
 const rvEls = document.querySelectorAll('.rv,.rv-left,.rv-right');
 const rvObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -865,7 +916,6 @@ const rvObs = new IntersectionObserver((entries) => {
 }, {threshold: 0.1, rootMargin:'0px 0px -40px 0px'});
 rvEls.forEach(el => rvObs.observe(el));
 
-// COUNTER ANIMATION for stats
 function animateCount(el, target, suffix='') {
   let start = 0;
   const dur = 1400;
@@ -891,6 +941,26 @@ const statsObs = new IntersectionObserver(entries => {
 }, {threshold: 0.4});
 const statsSection = document.querySelector('.about-stats');
 if (statsSection) statsObs.observe(statsSection);
+
+// TERMINI fetch
+fetch('events.json')
+  .then(r => r.ok ? r.json() : [])
+  .then(evs => {
+    const today = new Date().toISOString().slice(0,10);
+    const future = evs.filter(e => e.datum >= today);
+    const list = document.getElementById('termini-list');
+    if (!list) return;
+    if (!future.length) return; // pusti default sporočilo
+    list.innerHTML = future.map(e => {
+      const d = new Date(e.datum);
+      const label = d.toLocaleDateString('sl-SI', {day:'2-digit', month:'2-digit'}).replace('. ','.');
+      return `<div class="termin-row">
+        <span class="termin-datum">${label}</span>
+        <span class="termin-opis">${e.opis}</span>
+      </div>`;
+    }).join('');
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
